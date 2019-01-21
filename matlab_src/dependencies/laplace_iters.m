@@ -1,17 +1,17 @@
 function [LP, iter_change] = laplace_iters(fg,source,sink,init,maxiters,sz)
-
+%#codegen
 change_threshold = 10^(-3);
 
-%filter set-up (26 nearest neighbours)
-hl=ones(3,3,3);
-hl = hl/26; hl(2,2,2) = 0;
+%filter set-up (8 nearest neighbours) - Changed code for 2D implementation
+hl=ones(3,3);
+hl = hl/8; hl(2,2) = 0;
 % filter set-up (6 NN) (safer, especially in cases of coronal non-oblique
 % where dark band is more likely to 'leak' across diagonals
 % hl = strel('sphere',1);
 % hl = double(hl.Neighborhood);
 
 
-elems = 1: sz(1)*sz(2)*sz(3);
+elems = 1: sz(1)*sz(2);
 
 %set up all requisite variables
 vel = nan(sz);
